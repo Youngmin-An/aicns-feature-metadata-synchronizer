@@ -2,6 +2,7 @@
     A module for Sensor and Position Metadata Synchronizer Factory class.
 """
 from synchronizer_factory import SynchronizerFactory
+from ..metadataFetcher import MetadataFetcher, SensorMetadataFetcher
 
 
 class SensorSynchronizerFactory(SynchronizerFactory):
@@ -11,8 +12,8 @@ class SensorSynchronizerFactory(SynchronizerFactory):
 
     """
 
-    def create_metadata_fetcher(self):
-        pass
+    def create_metadata_fetcher(self) -> MetadataFetcher:
+        return SensorMetadataFetcher()
 
     def create_metadata_saver(self):
         pass
