@@ -34,3 +34,37 @@ class SensorMetadataUpserter(MetadataUpserter):
         else:
             logger.debug("Already has client")
         return self.client
+
+    def _upsert_with_transaction(self, metadata):
+        """Upsert feature metadata within transaction
+
+        :param metadata:
+        :return:
+        """
+        logger.debug("Entered _upsert_with_transaction")
+        with self.client.start_session() as session:
+            with session.start_transaction():
+                feature_db = self.client["feature"]
+                self.__drop_collection(
+                    db=feature_db, col_name="position"
+                )  # Drop position collection
+                self.__drop_collection(
+                    db=feature_db, col_name="sensor"
+                )  # Drop sensor collection
+                position_col = feature_db[
+                    "position"
+                ]  # Recreate position collection (lazy)
+                sensor_col = feature_db["sensor"]  # Recreate sensor collection (lazy)
+                position_col.insert_many(metadata[0])  # Insert position documents
+                sensor_col.insert_many(metadata[1])  # Insert sensor documents
+
+    def __drop_collection(self, db, col_name):
+        """
+
+        :param db:
+        :param col_name:
+        :return:
+        """
+        collection = db[col_name]
+        flag = collection.drop()
+        logger.info(f"Drop {col_name} collection result {flag}")
