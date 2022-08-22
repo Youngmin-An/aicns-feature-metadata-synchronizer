@@ -1,2 +1,2 @@
-from .synchronizer_factory import SynchronizerFactory
-from .sensor_synchronizer_factory import SensorSynchronizerFactory
+from synchronizerFactory.synchronizer_factory import SynchronizerFactory
+from synchronizerFactory.sensor_synchronizer_factory import SensorSynchronizerFactory

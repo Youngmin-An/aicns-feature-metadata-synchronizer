@@ -1,3 +1,3 @@
-from .sensor_manage import SensorManage
-from .sensor_type import SensorType
-from .sensor_pos import SensorPos
+from objects.sensor.sensor_manage import SensorManage
+from objects.sensor.sensor_type import SensorType
+from objects.sensor.sensor_pos import SensorPos
