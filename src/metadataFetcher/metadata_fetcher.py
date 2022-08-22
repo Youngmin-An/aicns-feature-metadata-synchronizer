@@ -7,6 +7,7 @@ from abc import ABCMeta, abstractmethod
 
 class MetadataFetcher(metaclass=ABCMeta):
     """Abstract Feature Metadata Fetcher that fetch metadata from external data sources"""
+
     def __init__(self):
         self.session = None
 
@@ -30,6 +31,6 @@ class MetadataFetcher(metaclass=ABCMeta):
         """Template method that fetch metadata strongly protocolized with corresponding updater
         :return:
         """
-        session = self._get_or_create_session(conn_conf)
-        metadata = self._get_dictionary_metadata(session)
+        self._get_or_create_session(conn_conf)
+        metadata = self._get_dictionary_metadata()
         return metadata

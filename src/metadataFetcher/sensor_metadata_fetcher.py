@@ -2,10 +2,10 @@
     A module for sensor and position metadata fetcher class (Concrete 1)
 """
 
-from metadata_fetcher import MetadataFetcher
+from metadataFetcher import MetadataFetcher
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from ..objects.sensor import SensorType, SensorPos, SensorManage
+from objects.sensor import SensorType, SensorPos, SensorManage
 
 import logging
 
@@ -26,13 +26,13 @@ class SensorMetadataFetcher(MetadataFetcher):
             # No exception handling so as to fail process
             logger.debug("Not yet has session")
             url = (
-                f"mysql+pymysql://{conn_conf.user.id}:{conn_conf.user.pw}@"
-                f"{conn_conf.addr}:{conn_conf.port}/{conn_conf.db}"
+                f"mysql+pymysql://{conn_conf['user']['id']}:{conn_conf['user']['pw']}@"
+                f"{conn_conf['addr']}:{conn_conf['port']}/{conn_conf['db']}"
             )
             engine = create_engine(url, echo=True)
             Session = sessionmaker(bind=engine)
             self.session = Session()
-            logger.info("Session created: ", self.session)
+            logger.info(f"Session created: {self.session}")
         else:
             logger.debug("Already has session")
         return self.session
@@ -58,7 +58,7 @@ class SensorMetadataFetcher(MetadataFetcher):
         filtered_positions = list(
             map((lambda pos: {key: pos[key] for key in wanted_keys}), dict_positions)
         )
-        logger.info("fetched dictionary positions: ", filtered_positions)
+        logger.info(f"fetched dictionary positions: {filtered_positions}")
         return filtered_positions
 
     def __get_dictionary_sensors(self):
@@ -81,7 +81,7 @@ class SensorMetadataFetcher(MetadataFetcher):
             dict_sensor["position"] = dict_position
             dict_sensor["type"] = dict_type
             sensors.append(dict_sensor)
-        logger.info("joined sensor dictionary: ", sensors)
+        logger.info(f"joined sensor dictionary: {sensors}")
         return sensors
 
     @staticmethod

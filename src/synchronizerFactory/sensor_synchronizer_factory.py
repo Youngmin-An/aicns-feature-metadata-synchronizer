@@ -1,8 +1,8 @@
 """
     A module for Sensor and Position Metadata Synchronizer Factory class.
 """
-from synchronizer_factory import SynchronizerFactory
-from ..metadataFetcher import MetadataFetcher, SensorMetadataFetcher
+from synchronizerFactory import SynchronizerFactory
+from metadataFetcher import MetadataFetcher, SensorMetadataFetcher
 
 
 class SensorSynchronizerFactory(SynchronizerFactory):
