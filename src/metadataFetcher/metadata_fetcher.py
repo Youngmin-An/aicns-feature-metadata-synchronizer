@@ -8,8 +8,8 @@ from abc import ABCMeta, abstractmethod
 class MetadataFetcher(metaclass=ABCMeta):
     """Abstract Feature Metadata Fetcher that fetch metadata from external data sources"""
 
-    def __init__(self):
-        self.session = None
+    def __init__(self, session=None):
+        self.session = session
 
     @abstractmethod
     def _get_or_create_session(self, conn_conf: object):

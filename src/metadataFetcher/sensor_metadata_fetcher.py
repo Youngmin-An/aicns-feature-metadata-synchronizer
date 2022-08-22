@@ -25,10 +25,13 @@ class SensorMetadataFetcher(MetadataFetcher):
         if self.session is None:
             # No exception handling so as to fail process
             logger.debug("Not yet has session")
-            url = (
-                f"mysql+pymysql://{conn_conf['user']['id']}:{conn_conf['user']['pw']}@"
-                f"{conn_conf['addr']}:{conn_conf['port']}/{conn_conf['db']}"
-            )
+            if "url" in conn_conf.keys():
+                url = conn_conf["url"]
+            else:
+                url = (
+                    f"mysql+pymysql://{conn_conf['user']['id']}:{conn_conf['user']['pw']}@"
+                    f"{conn_conf['addr']}:{conn_conf['port']}/{conn_conf['db']}"
+                )
             engine = create_engine(url, echo=True)
             Session = sessionmaker(bind=engine)
             self.session = Session()
