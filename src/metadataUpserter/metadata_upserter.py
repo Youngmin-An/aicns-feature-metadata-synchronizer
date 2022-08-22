@@ -8,12 +8,12 @@ from abc import ABCMeta, abstractmethod
 class MetadataUpserter(metaclass=ABCMeta):
     """Abstract Feature Metadata Upserter that upsert metadata to metadata store"""
 
-    def __init__(self, session=None):
-        self.session = session
+    def __init__(self, client=None):
+        self.client = client
 
     @abstractmethod
-    def _get_or_create_session(self, conn_conf: object):
-        """Protected Abstract method for getting or create session
+    def _get_or_create_client(self, conn_conf: object):
+        """Protected Abstract method for getting or create metadata store client
         :return:
         """
         return
@@ -30,6 +30,6 @@ class MetadataUpserter(metaclass=ABCMeta):
         """Template method that upsert metadata strongly protocolized from corresponding metadata fetcher
         :return:
         """
-        self._get_or_create_session(conn_conf)
+        self._get_or_create_client(conn_conf)
         self._upsert_with_transaction(metadata)
         return
