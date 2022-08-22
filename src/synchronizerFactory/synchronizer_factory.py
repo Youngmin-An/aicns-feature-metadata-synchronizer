@@ -6,7 +6,7 @@ from abc import ABCMeta, abstractmethod
 
 
 class SynchronizerFactory(metaclass=ABCMeta):
-    """Abstract Synchronizer Factory that yields fetcher and saver."""
+    """Abstract Synchronizer Factory that yields fetcher and upserter."""
 
     @abstractmethod
     def create_metadata_fetcher(self):
@@ -18,10 +18,10 @@ class SynchronizerFactory(metaclass=ABCMeta):
         return
 
     @abstractmethod
-    def create_metadata_saver(self):
-        """This is a abstract factory method yielding metadata saver in data pipeline
+    def create_metadata_upserter(self):
+        """This is a abstract factory method yielding metadata upserter in data pipeline
 
         :return:
-            Saver Object
+            Upserter Object
         """
         return

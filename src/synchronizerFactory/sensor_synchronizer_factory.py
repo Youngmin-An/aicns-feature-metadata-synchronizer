@@ -8,12 +8,12 @@ from metadataFetcher import MetadataFetcher, SensorMetadataFetcher
 class SensorSynchronizerFactory(SynchronizerFactory):
     """Concrete #1 Class from 'SynchronizerFactory'
     Sensor and Position Metadata Synchronizer Factory
-     that yielding Sensor and Position Metadata Fetcher and Saver.
+     that yielding Sensor and Position Metadata Fetcher and Upserter.
 
     """
 
     def create_metadata_fetcher(self) -> MetadataFetcher:
         return SensorMetadataFetcher()
 
-    def create_metadata_saver(self):
+    def create_metadata_upserter(self):
         pass
