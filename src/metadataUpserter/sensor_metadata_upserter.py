@@ -58,7 +58,16 @@ class SensorMetadataUpserter(MetadataUpserter):
                 position_col.insert_many(metadata[0])  # Insert position documents
                 sensor_col.insert_many(metadata[1])  # Insert sensor documents
 
-    def __drop_collection(self, db, col_name):
+    def _close_client(self):
+        """
+
+        :return:
+        """
+        if self.client is not None:
+            self.client.close()
+
+    @staticmethod
+    def __drop_collection(db, col_name):
         """
 
         :param db:

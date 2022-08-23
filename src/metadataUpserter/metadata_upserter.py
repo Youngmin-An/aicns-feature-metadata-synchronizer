@@ -26,10 +26,19 @@ class MetadataUpserter(metaclass=ABCMeta):
         """
         return
 
+    @abstractmethod
+    def _close_client(self):
+        """Protected Abstract method for closing metadata store client
+
+        :return:
+        """
+        return
+
     def upsert_metadata(self, conn_conf: object, metadata):
         """Template method that upsert metadata strongly protocolized from corresponding metadata fetcher
         :return:
         """
         self._get_or_create_client(conn_conf)
         self._upsert_with_transaction(metadata)
+        self._close_client()
         return
