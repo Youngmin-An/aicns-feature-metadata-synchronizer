@@ -3,7 +3,7 @@
 """
 from synchronizerFactory import SynchronizerFactory
 from metadataFetcher import MetadataFetcher, SensorMetadataFetcher
-
+from metadataUpserter import MetadataUpserter, SensorMetadataUpserter
 
 class SensorSynchronizerFactory(SynchronizerFactory):
     """Concrete #1 Class from 'SynchronizerFactory'
@@ -15,5 +15,5 @@ class SensorSynchronizerFactory(SynchronizerFactory):
     def create_metadata_fetcher(self) -> MetadataFetcher:
         return SensorMetadataFetcher()
 
-    def create_metadata_upserter(self):
-        pass
+    def create_metadata_upserter(self) -> MetadataUpserter:
+        return SensorMetadataUpserter()

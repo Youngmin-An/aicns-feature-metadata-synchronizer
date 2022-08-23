@@ -5,13 +5,24 @@ import logging
 from synchronizerFactory import SensorSynchronizerFactory
 
 
-def client(conn_conf):
+def client():
     logger = logging.getLogger(__name__)
     logger.debug("Entered client")
-    synchronizer = SensorSynchronizerFactory()
-    fetcher = synchronizer.create_metadata_fetcher()
-    metadata = fetcher.fetch_metadata(conn_conf)
+
+    # Instantiate synchronizerFactory
+    synchronizer_factory = SensorSynchronizerFactory()
+    # Fetch metadata
+    fetcher = synchronizer_factory.create_metadata_fetcher()
+    source_conn_conf = __get_source_conn_conf()
+    metadata = fetcher.fetch_metadata(source_conn_conf)
     logger.info(f"Metadata {metadata}")
+
+    # Upsert metadata
+    upserter = synchronizer_factory.create_metadata_upserter()
+    dest_conn_conf = __get_dest_conn_conf()
+    upserter.upsert_metadata(conn_conf=dest_conn_conf, metadata=metadata)
+    upserter.close_client
+    logger.info("Synchronizing success")
 
 
 def __get_source_conn_conf():
@@ -33,10 +44,24 @@ def __get_source_conn_conf():
     return conn_conf
 
 
+def __get_dest_conn_conf():
+    logger = logging.getLogger(__name__)
+    logger.debug("Entered __get_dest_conn_conf")
+    conn_conf = dict()
+    try:
+        conn_conf["addr"] = os.environ["DESTINATION_ADDRESS"]
+        conn_conf["port"] = os.environ["DESTINATION_PORT"]
+    except Exception as e:
+        logger.error(f"Can't read dest env: {e}")
+        raise e
+    else:
+        logger.info(f"Dest conn_conf: {conn_conf}")
+    return conn_conf
+
+
 @click.command()
 def main():
-    source_conn_conf = __get_source_conn_conf()
-    client(source_conn_conf)
+    client()
     pass
 
 
