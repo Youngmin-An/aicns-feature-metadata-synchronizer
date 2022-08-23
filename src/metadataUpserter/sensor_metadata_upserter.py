@@ -58,8 +58,8 @@ class SensorMetadataUpserter(MetadataUpserter):
                 position_col.insert_many(metadata[0])  # Insert position documents
                 sensor_col.insert_many(metadata[1])  # Insert sensor documents
 
-    def _close_client(self):
-        """
+    def close_client(self):
+        """Wrapper Method for closing injected metadata store client
 
         :return:
         """
